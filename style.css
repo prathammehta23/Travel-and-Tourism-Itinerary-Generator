@@ -1,46 +1,151 @@
-// static/script.js
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('generate').addEventListener('click', function() {
-        const city = document.getElementById('city').value;
-        const days = document.getElementById('days').value;
+/* General body styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    color: #333;
+}
 
-        // Validate input
-        if (!city || !days) {
-            alert('Please enter both city and number of days.');
-            return;
-        }
+/* Hero section with full-screen background image */
+.hero {
+    height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://source.unsplash.com/1600x900/?india,travel') no-repeat center center/cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    text-align: center;
+    padding: 0 20px;
+}
 
-        // Disable the button to prevent multiple clicks
-        document.getElementById('generate').disabled = true;
-        document.getElementById('generate').innerText = 'Generating...';
+.hero h1 {
+    font-size: 4em;
+    text-shadow: 4px 4px 12px rgba(0, 0, 0, 0.7);
+    margin-bottom: 10px;
+    font-weight: 700;
+}
 
-        // Send data to the backend
-        fetch('/generate-itinerary', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                city: city,
-                days: days
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Display the itinerary
-            document.getElementById('itinerary').innerHTML = `<pre>${data.itinerary}</pre>`;
+.hero p {
+    font-size: 1.8em;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+}
 
-            // Re-enable the button
-            document.getElementById('generate').disabled = false;
-            document.getElementById('generate').innerText = 'Generate Itinerary';
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred while generating the itinerary.');
+.cta-btn {
+    padding: 15px 40px;
+    background: #ff9800;
+    color: white;
+    border-radius: 50px;
+    font-size: 1.2em;
+    text-decoration: none;
+    box-shadow: 0 5px 15px rgba(255, 152, 0, 0.5);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
 
-            // Re-enable the button
-            document.getElementById('generate').disabled = false;
-            document.getElementById('generate').innerText = 'Generate Itinerary';
-        });
-    });
-});
+.cta-btn:hover {
+    background: #e65100;
+    box-shadow: 0 8px 20px rgba(230, 81, 0, 0.7);
+}
+
+/* Container section */
+.container {
+    padding: 50px 20px;
+    background: white;
+    color: #333;
+    border-radius: 16px;
+    max-width: 800px;
+    margin: -50px auto 50px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.container h2 {
+    font-size: 2.8em;
+    margin-bottom: 20px;
+    color: #ff5722;
+}
+
+/* Input styling */
+input {
+    width: 100%;
+    padding: 15px;
+    margin: 15px 0;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1.1em;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+input:focus {
+    border-color: #ff9800;
+    box-shadow: 0 0 10px rgba(255, 152, 0, 0.3);
+    outline: none;
+}
+
+/* Button styling */
+button {
+    width: 100%;
+    padding: 15px;
+    background: #ff5722;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.3em;
+    cursor: pointer;
+    box-shadow: 0 6px 12px rgba(255, 87, 34, 0.3);
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+
+button:hover {
+    background: #e64a19;
+    box-shadow: 0 8px 16px rgba(255, 87, 34, 0.5);
+}
+
+/* Itinerary section */
+#itinerary {
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    color: #333;
+    font-size: 1.2em;
+}
+
+/* Footer */
+.footer {
+    background: #232526;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.5em;
+    }
+    
+    .hero p {
+        font-size: 1.4em;
+    }
+
+    .container h2 {
+        font-size: 2em;
+    }
+    
+    button {
+        font-size: 1.1em;
+    }
+}
